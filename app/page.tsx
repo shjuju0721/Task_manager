@@ -50,7 +50,7 @@ export default function DashboardPage() {
   if (!ready) return <DashboardSkeleton />
 
   return (
-    <div className="mx-auto max-w-6xl p-6 lg:p-8">
+    <div className="mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
       <PageHeader
         title="대시보드"
         description="작업 현황을 한눈에 파악하고 오늘 집중할 일을 확인하세요."

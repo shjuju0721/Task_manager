@@ -84,7 +84,7 @@ export default function TasksPage() {
   if (!ready) return <ListSkeleton />
 
   return (
-    <div className="mx-auto max-w-5xl p-6 lg:p-8">
+    <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
       <PageHeader
         title="작업 목록"
         description={`전체 ${state.tasks.length}건 중 ${tasks.length}건 표시`}

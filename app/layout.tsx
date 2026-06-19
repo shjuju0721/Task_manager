@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Geist_Mono, Space_Grotesk } from "next/font/google"
 
 import "./globals.css"
-import { AppSidebar } from "@/components/app-sidebar"
+import { AppShell } from "@/components/app-shell"
 import { ColorThemeProvider } from "@/components/color-theme-provider"
 import { TaskDialogProvider } from "@/components/task-dialog-provider"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -50,12 +50,7 @@ export default function RootLayout({
           <ColorThemeProvider>
             <StoreProvider>
               <TaskDialogProvider>
-                <div className="flex">
-                  <AppSidebar />
-                  <main className="h-svh flex-1 overflow-y-auto">
-                    {children}
-                  </main>
-                </div>
+                <AppShell>{children}</AppShell>
               </TaskDialogProvider>
             </StoreProvider>
           </ColorThemeProvider>

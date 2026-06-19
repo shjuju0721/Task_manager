@@ -1,7 +1,14 @@
 "use client"
 
 import * as React from "react"
-import { FolderKanban, Pencil, Plus, RotateCcw } from "lucide-react"
+import { useRouter } from "next/navigation"
+import {
+  ChevronRight,
+  FolderKanban,
+  Pencil,
+  Plus,
+  RotateCcw,
+} from "lucide-react"
 
 import { PageHeader } from "@/components/page-header"
 import { ProjectDialog } from "@/components/project-dialog"
@@ -14,6 +21,7 @@ import { useStore } from "@/lib/store"
 import type { Project } from "@/lib/types"
 
 export default function ProjectsPage() {
+  const router = useRouter()
   const { state, ready, resetDemo } = useStore()
   const [open, setOpen] = React.useState(false)
   const [editing, setEditing] = React.useState<Project | null>(null)
@@ -27,10 +35,10 @@ export default function ProjectsPage() {
   if (!ready) return <ListSkeleton />
 
   return (
-    <div className="mx-auto max-w-5xl p-6 lg:p-8">
+    <div className="mx-auto max-w-5xl p-4 sm:p-6 lg:p-8">
       <PageHeader
         title="프로젝트"
-        description="작업을 프로젝트로 묶어 진행 상황을 관리하세요."
+        description="프로젝트를 눌러 관련 할 일을 확인하세요."
       >
         <Button
           variant="ghost"
@@ -59,7 +67,11 @@ export default function ProjectsPage() {
           {state.projects.map((project) => {
             const pp = progressById.get(project.id)
             return (
-              <Card key={project.id} className="gap-3">
+              <Card
+                key={project.id}
+                onClick={() => router.push(`/projects/${project.id}`)}
+                className="hover:border-primary/40 group cursor-pointer gap-3 transition-colors hover:shadow-md"
+              >
                 <div className="flex items-start gap-3">
                   <span
                     className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg"
@@ -81,7 +93,8 @@ export default function ProjectsPage() {
                     )}
                   </div>
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation()
                       setEditing(project)
                       setOpen(true)
                     }}
@@ -103,6 +116,11 @@ export default function ProjectsPage() {
                     value={pp?.rate ?? 0}
                     indicatorColor={project.color}
                   />
+                </div>
+
+                <div className="text-muted-foreground group-hover:text-primary flex items-center justify-end gap-0.5 text-xs font-medium">
+                  할 일 보기
+                  <ChevronRight className="size-3.5" />
                 </div>
               </Card>
             )

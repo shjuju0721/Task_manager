@@ -44,7 +44,7 @@ export function KanbanColumn({ status, tasks, projectById }: KanbanColumnProps) 
       onDragLeave={() => setOver(false)}
       onDrop={handleDrop}
       className={cn(
-        "bg-muted/40 flex h-full min-h-[60vh] flex-col rounded-xl border p-3 transition-colors",
+        "bg-muted/40 flex h-full min-h-[140px] flex-col rounded-xl border p-3 transition-colors lg:min-h-[60vh]",
         over && "border-primary/50 bg-primary/5"
       )}
     >

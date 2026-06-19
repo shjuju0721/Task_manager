@@ -45,7 +45,7 @@ export default function BoardPage() {
   if (!ready) return <BoardSkeleton />
 
   return (
-    <div className="flex h-svh flex-col p-6 lg:p-8">
+    <div className="flex flex-col p-4 sm:p-6 lg:h-full lg:min-h-0 lg:p-8">
       <PageHeader
         title="칸반 보드"
         description="카드를 끌어다 놓아 상태를 변경하세요."
@@ -68,7 +68,7 @@ export default function BoardPage() {
         </Button>
       </PageHeader>
 
-      <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:min-h-0 lg:flex-1 lg:grid-cols-3">
         {STATUS_ORDER.map((status) => (
           <KanbanColumn
             key={status}

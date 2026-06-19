@@ -26,57 +26,87 @@ const NAV = [
   { href: "/projects", label: "프로젝트", icon: FolderKanban },
 ]
 
-export function AppSidebar() {
+export function AppSidebar({
+  open = false,
+  onClose,
+}: {
+  open?: boolean
+  onClose?: () => void
+}) {
   const pathname = usePathname()
   const { openCreate } = useTaskDialog()
 
   return (
-    <aside className="bg-sidebar text-sidebar-foreground flex h-svh w-60 shrink-0 flex-col border-r">
-      <div className="flex items-center gap-2 px-5 py-5">
-        <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
-          <KanbanSquare className="size-5" />
+    <>
+      {/* 모바일 드로어 배경 */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={onClose}
+          aria-hidden
+        />
+      )}
+
+      <aside
+        className={cn(
+          "bg-sidebar text-sidebar-foreground fixed inset-y-0 left-0 z-50 flex h-svh w-60 shrink-0 flex-col border-r transition-transform duration-200",
+          "lg:static lg:translate-x-0",
+          open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        )}
+      >
+        <div className="flex items-center gap-2 px-5 py-5">
+          <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
+            <KanbanSquare className="size-5" />
+          </div>
+          <div>
+            <p className="text-sm leading-none font-bold">TaskFlow</p>
+            <p className="text-muted-foreground mt-0.5 text-xs">작업 관리</p>
+          </div>
         </div>
-        <div>
-          <p className="text-sm leading-none font-bold">TaskFlow</p>
-          <p className="text-muted-foreground mt-0.5 text-xs">작업 관리</p>
+
+        <div className="px-3">
+          <Button
+            className="w-full"
+            onClick={() => {
+              openCreate()
+              onClose?.()
+            }}
+          >
+            <Plus /> 새 작업
+          </Button>
         </div>
-      </div>
 
-      <div className="px-3">
-        <Button className="w-full" onClick={() => openCreate()}>
-          <Plus /> 새 작업
-        </Button>
-      </div>
+        <nav className="mt-4 flex flex-col gap-0.5 px-3">
+          {NAV.map((item) => {
+            const active =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href)
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onClose}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  active
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                    : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
+                )}
+              >
+                <item.icon className="size-4" />
+                {item.label}
+              </Link>
+            )
+          })}
+        </nav>
 
-      <nav className="mt-4 flex flex-col gap-0.5 px-3">
-        {NAV.map((item) => {
-          const active =
-            item.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(item.href)
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                active
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                  : "text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground"
-              )}
-            >
-              <item.icon className="size-4" />
-              {item.label}
-            </Link>
-          )
-        })}
-      </nav>
-
-      <div className="mt-auto flex flex-col gap-0.5 p-3">
-        <ThemePicker />
-        <ThemeToggle />
-      </div>
-    </aside>
+        <div className="mt-auto flex flex-col gap-0.5 p-3">
+          <ThemePicker />
+          <ThemeToggle />
+        </div>
+      </aside>
+    </>
   )
 }
 
