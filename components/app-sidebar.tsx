@@ -16,6 +16,7 @@ import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/button"
 import { useTaskDialog } from "@/components/task-dialog-provider"
+import { ThemePicker } from "@/components/theme-picker"
 import { cn } from "@/lib/utils"
 
 const NAV = [
@@ -71,7 +72,8 @@ export function AppSidebar() {
         })}
       </nav>
 
-      <div className="mt-auto p-3">
+      <div className="mt-auto flex flex-col gap-0.5 p-3">
+        <ThemePicker />
         <ThemeToggle />
       </div>
     </aside>
