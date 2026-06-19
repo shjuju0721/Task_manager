@@ -53,9 +53,38 @@ export function lastNDays(n: number): string[] {
   return out
 }
 
-const WEEKDAY = ["일", "월", "화", "수", "목", "금", "토"]
+export const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"]
 
 export function weekdayLabel(dateISO: string): string {
   const d = new Date(dateISO + "T00:00:00")
-  return WEEKDAY[d.getDay()]
+  return WEEKDAYS[d.getDay()]
+}
+
+/** Date → 로컬 기준 YYYY-MM-DD (타임존 오프셋 영향 없음) */
+export function isoLocal(d: Date): string {
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, "0")
+  const day = String(d.getDate()).padStart(2, "0")
+  return `${y}-${m}-${day}`
+}
+
+/** 해당 월을 채우는 42칸(6주) 달력의 날짜 ISO 배열 (일요일 시작) */
+export function monthGrid(year: number, month: number): string[] {
+  const first = new Date(year, month, 1)
+  const start = new Date(year, month, 1 - first.getDay())
+  const cells: string[] = []
+  for (let i = 0; i < 42; i++) {
+    const d = new Date(start)
+    d.setDate(start.getDate() + i)
+    cells.push(isoLocal(d))
+  }
+  return cells
+}
+
+export function formatYearMonth(year: number, month: number): string {
+  return `${year}년 ${month + 1}월`
+}
+
+export function monthOf(dateISO: string): number {
+  return Number(dateISO.slice(5, 7)) - 1
 }

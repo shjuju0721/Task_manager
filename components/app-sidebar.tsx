@@ -4,6 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
+  CalendarDays,
   KanbanSquare,
   LayoutDashboard,
   ListTodo,
@@ -24,6 +25,7 @@ const NAV = [
   { href: "/board", label: "칸반 보드", icon: KanbanSquare },
   { href: "/tasks", label: "작업 목록", icon: ListTodo },
   { href: "/projects", label: "프로젝트", icon: FolderKanban },
+  { href: "/calendar", label: "캘린더", icon: CalendarDays },
 ]
 
 export function AppSidebar({
