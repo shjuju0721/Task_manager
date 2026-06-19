@@ -109,11 +109,13 @@ export default function ProjectDetailPage() {
       </Card>
 
       {/* 할 일 목록 (상태별) */}
-      <PageHeader title="할 일" description={`${tasks.length}개의 작업`}>
-        <Button onClick={() => openCreate({ projectId: project.id })}>
-          <Plus /> 작업 추가
-        </Button>
-      </PageHeader>
+      <div className="mt-10">
+        <PageHeader title="할 일" description={`${tasks.length}개의 작업`}>
+          <Button onClick={() => openCreate({ projectId: project.id })}>
+            <Plus /> 작업 추가
+          </Button>
+        </PageHeader>
+      </div>
 
       {tasks.length === 0 ? (
         <div className="text-muted-foreground rounded-xl border border-dashed py-16 text-center text-sm">
