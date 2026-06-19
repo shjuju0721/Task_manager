@@ -48,6 +48,7 @@
 }
 
 :root {
+    color-scheme: light;
     --background: oklch(1 0 0);
     --foreground: oklch(0.148 0.004 228.8);
     --card: oklch(1 0 0);
@@ -83,6 +84,7 @@
 }
 
 .dark {
+    color-scheme: dark;
     --background: oklch(0.148 0.004 228.8);
     --foreground: oklch(0.987 0.002 197.1);
     --card: oklch(0.218 0.008 223.9);
@@ -125,5 +127,10 @@
     }
   html {
     @apply font-sans;
+    }
+  /* 네이티브 select 드롭다운 목록이 테마 색을 따르도록 (다크모드 가독성) */
+  select option {
+    background-color: var(--popover);
+    color: var(--popover-foreground);
     }
 }
